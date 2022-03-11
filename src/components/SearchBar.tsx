@@ -15,7 +15,9 @@ export const SearchBar = ({ setFilteredRepos, repos }: any) => {
         });
         setFilteredRepos(filteredRepos)
     }, [searchInput])
-    return <div>
+    
+    return <div className="flex items-start">
+        <h1 className='mr-2'>Git repositories</h1>
         <input type="text"
             placeholder="search..."
             value={searchInput}
