@@ -10,8 +10,8 @@ import SearchUser from './components/SearchUser';
 function App() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
-
   const [user, setUser] = useState('rengil')
+
   const [repos, setRepos] = useState({})
   const [personalInfo, setPersonalInfo] = useState({})
   const [filteredRepos, setFilteredRepos] = useState({})
@@ -51,7 +51,7 @@ function App() {
           fetchMyAPI={fetchMyAPI}
         />
         <PersonalPanel
-          personalInfo={personalInfo}
+          personalInfo={{...personalInfo}}
         />
       </div>
       <div className='w-2/3  flex flex-col'>

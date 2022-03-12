@@ -1,10 +1,11 @@
 import moment from "moment";
+import { FC } from "react";
 import Star from "./Star";
 
-const RepositoryCard = ({ item }: any) => {
+const RepositoryCard: FC<{item:{updated_at:string, name:string, description:string, language:string, license:{name:string}, forks:number, private:boolean}}>  = ({ item }) => {
     const date = new Date(item.updated_at);
 
-    return <div className=" w-full h-auto my-2 p-4 flex shadow-lg rounded-xl bg-white">
+    return <div className="w-full h-auto my-2 p-4 flex shadow-lg rounded-xl bg-white">
         <div className="w-4/6">
             <div className="flex items-center">
                 <span className="cursor-pointer text-lg text-blue-500 font-bold hover:text-blue-600 hover:underline"> {item.name}</span>

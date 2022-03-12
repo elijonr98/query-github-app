@@ -1,10 +1,14 @@
+import { FC } from "react"
 import RepositoryCard from "./RepositoryCard"
 
-const Results = ({ filteredRepos }: any) => {
+interface Props {
+    filteredRepos: any;
+}
 
-return <>
-        {filteredRepos?.map((item: any, index:number) => {
-            return <RepositoryCard item={item} key={index}/>
+const Results: FC<Props> = ({ filteredRepos }) => {
+    return <>
+        {filteredRepos?.map((item: any, index: number) => {
+            return <RepositoryCard item={item} key={index} />
         })}
     </>
 }

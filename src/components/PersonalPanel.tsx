@@ -1,6 +1,23 @@
+import { FC } from "react"
 import { ReactComponent as Building } from "../assets/building.svg"
 import { ReactComponent as Location } from "../assets/location.svg"
-const PersonalPanel = ({personalInfo }: any) => {
+
+
+interface Person {
+    avatar_url?: string;
+    name?: string;
+    login?: string;
+    bio?: string;
+    followers?: number;
+    following?: number;
+    company?: string;
+    location?: string;
+    email?: string;
+    twitter_username?: string;
+  }
+ 
+  
+const PersonalPanel: FC<{personalInfo:Person}> = ({personalInfo}) => {
     return<div className='flex flex-col mx-2'>
         <img src={personalInfo.avatar_url} className='flex  border rounded-full shadow-lg items-center justify-center'></img>
         <span className="text-2xl font-bold">{personalInfo.name}</span>
