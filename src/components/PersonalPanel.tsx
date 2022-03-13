@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { ReactComponent as Building } from "../assets/building.svg"
 import { ReactComponent as Location } from "../assets/location.svg"
+import SearchUser from "./SearchUser";
 
 
 interface Person {
@@ -16,12 +17,22 @@ interface Person {
     twitter_username?: string;
   }
  
+  interface Props {
+    personalInfo:Person;
+    user: string;
+    setUser: (val: string) => void;
+    fetchMyAPI: () => void;
+};
   
-const PersonalPanel: FC<{personalInfo:Person}> = ({personalInfo}) => {
+const PersonalPanel: FC<Props> = ({personalInfo, setUser, fetchMyAPI, user}) => {
     return<div className='flex flex-col mx-2 '>
-        <img src={personalInfo.avatar_url} className='flex border rounded-full shadow-lg items-center justify-center'></img>
-        <span className="text-2xl font-bold">{personalInfo.name}</span>
-        <span className="text-xl text-gray-500">{personalInfo.login}</span>
+        <img src={personalInfo.avatar_url} alt="img" className='flex border rounded-full shadow-lg items-center justify-center'></img>
+        <span className="text-2xl font-bold mt-2">{personalInfo.name}</span>
+        <SearchUser
+          user={user}
+          setUser={setUser}
+          fetchMyAPI={fetchMyAPI}
+        />
         <div className='mt-2 bg-gray-200 hover:bg-gray-300 duration-300 w-full flex items-center justify-center py-1 border rounded-md cursor-pointer'>Follow</div>
         <span className="mt-2 text-lg">{personalInfo.bio}</span>
     
@@ -30,9 +41,9 @@ const PersonalPanel: FC<{personalInfo:Person}> = ({personalInfo}) => {
         {personalInfo.company && 
         <span className="flex"><Building />{personalInfo.company}</span>   }
         {personalInfo.location &&
-        <span className="flex"><Location />{personalInfo.location}</span>}
-        <span>{personalInfo.email}</span>
-        <span>{personalInfo.twitter_username}</span>
+        <span className="flex mt-2"><Location />{personalInfo.location}</span>}
+        {personalInfo.email &&
+        <span  className="mt-2">{personalInfo.email}</span>}
     </div>
 }
 export default PersonalPanel

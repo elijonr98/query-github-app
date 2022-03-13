@@ -4,24 +4,23 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Results from './components/Results';
-import SearchUser from './components/SearchUser';
 import Pagination from './components/Pagination';
-
 
 function App() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
-  const [user, setUser] = useState('rengil')
+
 
   const [repos, setRepos] = useState([])
   const [personalInfo, setPersonalInfo] = useState({})
   const [filteredRepos, setFilteredRepos] = useState([])
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
+  const [postsPerPage] = useState(6);
 
-  const [languages, setLanguages]: any = useState([])
-
+  const [user, setUser] = useState('rengil')
+ 
+ 
   async function fetchMyAPI() {
     const resposResult: any = await axios(`https://api.github.com/users/${user}/repos`)
     const personalInfoResult: any = await axios(`https://api.github.com/users/${user}`)
@@ -30,7 +29,6 @@ function App() {
     setPersonalInfo(personalInfoResult.data)
     setStatus("resolved");
   }
-
 
   useEffect(() => {
     try {
@@ -42,7 +40,7 @@ function App() {
   }, [])
 
   if (status === "idle" || status === "pending") {
-    return <h1>Loading ... </h1>;
+    return <div className='flex items-center justify-center h-screen'>Loading...</div>;
   }
 
   if (status === "rejected") {
@@ -56,18 +54,16 @@ function App() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="bg-gray-100 flex flex-wrap lg:px-40 lg:py-20 min-h-screen">
-      <div className='lg:w-1/3 px-10'>
-        <SearchUser
-          user={user}
-          setUser={setUser}
-          fetchMyAPI={fetchMyAPI}
-        />
+    <div className="bg-gray-50 flex flex-wrap xl:px-40 lg:py-20 min-h-screen min-w-min">
+      <div className='md:w-1/3 px-10'>
         <PersonalPanel
           personalInfo={{ ...personalInfo }}
+          setUser={setUser}
+          user = {user}
+          fetchMyAPI={fetchMyAPI}
         />
       </div>
-      <div className='lg:w-2/3  flex flex-col'>
+      <div className='md:w-2/3  flex flex-col'>
         <SearchBar
           setFilteredRepos={setFilteredRepos}
           paginate={paginate}
@@ -76,14 +72,14 @@ function App() {
         <Results
           filteredRepos={currentPosts}
         />
-
-        <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={filteredRepos.length}
-          paginate={paginate}
-          currentPage={currentPage}
-        />
-
+        {filteredRepos.length > postsPerPage &&
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={filteredRepos.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        }
       </div>
     </div>
   );

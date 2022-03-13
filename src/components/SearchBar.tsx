@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useState } from "react";
 import { useEffect } from "react";
+import SortButton from "./SortButton";
 
 
 interface Props {
@@ -16,21 +17,30 @@ export const SearchBar: FC<Props> = ({ setFilteredRepos, paginate, repos }) => {
     }
 
     useEffect(() => {
-        const filteredRepos = repos.filter(function (currentElement: { name: string }) {
-            const name = currentElement.name.toLowerCase();
-            return name.includes(searchInput.toLowerCase())
+        const filteredRepos = repos.filter(function (currentElement: { name: string, description: string }) {
+            const name = currentElement?.name.toLowerCase();
+            const description = currentElement.description?.toLowerCase();
+            return name?.includes(searchInput.toLowerCase()) || description?.includes(searchInput.toLowerCase());
         });
         setFilteredRepos(filteredRepos)
         paginate(1);
     }, [searchInput])
 
-    return <div className="flex items-start">
-        <h1 className='w-1/6'>Find a repository</h1>
+    return <div className="flex flex-wrap items-center w-full justify-between mt-10 mb-4">
+        <div className="lg:hidden w-full border-t border-2 border-gray-300 mb-2"></div>
+        <div className="w-full mb-10 text-2xl font-bold text-gray-700 flex justify-center">Github Repositories</div>
         <input type="text"
-            className="w-5/6 mt-1 focus:ring-orange-600 focus:border-red-300 block  shadow-sm h-9 sm:text-sm border-gray-300 rounded-md px-2"
-            placeholder="search..."
+            className="text-gray-500 h-8 px-2 rounded-md  w-full border-2 mx-1"
+            placeholder="Find a repository..."
             value={searchInput}
             onChange={handleChange} />
+        <div className="flex w-full mt-2">
+            <SortButton name={"Type"}/>
+            <SortButton name={"Language"} />
+            <SortButton name={"Sort"} />
+        </div>
+
+
     </div>
 
 }
