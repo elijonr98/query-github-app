@@ -18,8 +18,8 @@ interface Person {
  
   
 const PersonalPanel: FC<{personalInfo:Person}> = ({personalInfo}) => {
-    return<div className='flex flex-col mx-2'>
-        <img src={personalInfo.avatar_url} className='flex  border rounded-full shadow-lg items-center justify-center'></img>
+    return<div className='flex flex-col mx-2 '>
+        <img src={personalInfo.avatar_url} className='flex border rounded-full shadow-lg items-center justify-center'></img>
         <span className="text-2xl font-bold">{personalInfo.name}</span>
         <span className="text-xl text-gray-500">{personalInfo.login}</span>
         <div className='mt-2 bg-gray-200 hover:bg-gray-300 duration-300 w-full flex items-center justify-center py-1 border rounded-md cursor-pointer'>Follow</div>
