@@ -9,7 +9,11 @@ interface Props {
     repos: any;
 }
 
-export const SearchBar: FC<Props> = ({ setFilteredRepos, paginate, repos }) => {
+/**
+ * Component that gives the option to filter all repositories and 
+ * show only the ones that match the search input
+ */
+export const Filter: FC<Props> = ({ setFilteredRepos, paginate, repos }) => {
     const [searchInput, setSearchInput] = useState('');
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +30,7 @@ export const SearchBar: FC<Props> = ({ setFilteredRepos, paginate, repos }) => {
         paginate(1);
     }, [searchInput])
 
-    return <div className="flex flex-wrap items-center w-full justify-between mt-10 mb-4">
+    return <div className="flex flex-wrap items-center w-full justify-between mb-4">
         <div className="lg:hidden w-full border-t border-2 border-gray-300 mb-2"></div>
         <div className="w-full mb-10 text-2xl font-bold text-gray-700 flex justify-center">Github Repositories</div>
         <input type="text"
@@ -35,7 +39,7 @@ export const SearchBar: FC<Props> = ({ setFilteredRepos, paginate, repos }) => {
             value={searchInput}
             onChange={handleChange} />
         <div className="flex w-full mt-2">
-            <SortButton name={"Type"}/>
+            <SortButton name={"Type"} />
             <SortButton name={"Language"} />
             <SortButton name={"Sort"} />
         </div>
@@ -45,4 +49,4 @@ export const SearchBar: FC<Props> = ({ setFilteredRepos, paginate, repos }) => {
 
 }
 
-export default SearchBar
+export default Filter

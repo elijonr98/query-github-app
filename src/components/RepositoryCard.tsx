@@ -13,6 +13,10 @@ interface Props {
         private: boolean
     }
 }
+
+/**
+ * Component that shows repository information based on given props
+ */
 const RepositoryCard: FC<Props> = ({ item }) => {
     const date = new Date(item.updated_at);
 

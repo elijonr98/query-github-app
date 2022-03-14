@@ -1,4 +1,4 @@
-import SearchBar from './components/SearchBar'
+import Filter from './components/Filter'
 import PersonalPanel from './components/PersonalPanel';
 import './App.css';
 import { useEffect, useState } from 'react';
@@ -10,20 +10,16 @@ function App() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
 
-
   const [repos, setRepos] = useState([])
   const [personalInfo, setPersonalInfo] = useState({})
   const [filteredRepos, setFilteredRepos] = useState([])
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(6);
-
-  const [user, setUser] = useState('rengil')
- 
- 
-  async function fetchMyAPI() {
-    const resposResult: any = await axios(`https://api.github.com/users/${user}/repos`)
-    const personalInfoResult: any = await axios(`https://api.github.com/users/${user}`)
+  const [repositoriesPerPage] = useState(6);
+  
+  async function fetchMyAPI(userr:string) {
+    const resposResult: any = await axios(`https://api.github.com/users/${userr}/repos`)
+    const personalInfoResult: any = await axios(`https://api.github.com/users/${userr}`)
     setRepos(resposResult.data)
     setFilteredRepos(resposResult.data)
     setPersonalInfo(personalInfoResult.data)
@@ -32,7 +28,7 @@ function App() {
 
   useEffect(() => {
     try {
-      fetchMyAPI()
+      fetchMyAPI('rengil')
     } catch {
       setStatus("rejected");
       setError(error);
@@ -48,8 +44,8 @@ function App() {
   }
 
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const indexOfLastPost = currentPage * repositoriesPerPage;
+  const indexOfFirstPost = indexOfLastPost - repositoriesPerPage;
   const currentPosts = filteredRepos.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -58,13 +54,11 @@ function App() {
       <div className='md:w-1/3 px-10'>
         <PersonalPanel
           personalInfo={{ ...personalInfo }}
-          setUser={setUser}
-          user = {user}
           fetchMyAPI={fetchMyAPI}
         />
       </div>
       <div className='md:w-2/3  flex flex-col'>
-        <SearchBar
+        <Filter
           setFilteredRepos={setFilteredRepos}
           paginate={paginate}
           repos={repos}
@@ -72,10 +66,10 @@ function App() {
         <Results
           filteredRepos={currentPosts}
         />
-        {filteredRepos.length > postsPerPage &&
+        {filteredRepos.length > repositoriesPerPage &&
           <Pagination
-            postsPerPage={postsPerPage}
-            totalPosts={filteredRepos.length}
+            repositoriesPerPage={repositoriesPerPage}
+            totalRepositories={filteredRepos.length}
             paginate={paginate}
             currentPage={currentPage}
           />

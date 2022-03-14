@@ -1,18 +1,22 @@
-import { ChangeEvent, FC } from "react"
+import { ChangeEvent, FC, useState } from "react"
 import { ReactComponent as SearchIcon } from "../assets/search.svg"
 
 interface Props {
-    user: string;
-    setUser: (val: string) => void;
-    fetchMyAPI: () => void;
+    fetchMyAPI: (val: string) => void;
+    currentUser: string;
 };
 
-const SearchUser: FC<Props> = ({ user, setUser, fetchMyAPI }) => {
+/**
+ * Component that gives the option to switch the github user and show repositories based on input
+ */
+const SearchUser: FC<Props> = ({ fetchMyAPI, currentUser }) => {
+    const [user, setUser] = useState(currentUser);
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUser(e.target.value)
     }
     const handleOnClick = () => {
-        fetchMyAPI();
+        fetchMyAPI(user);
     }
 
     return <div className="flex items-center">
