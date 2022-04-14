@@ -28,7 +28,7 @@ function App() {
 
   useEffect(() => {
     try {
-      fetchMyAPI('rengil')
+      fetchMyAPI('elijonr98')
     } catch {
       setStatus("rejected");
       setError(error);
@@ -42,7 +42,6 @@ function App() {
   if (status === "rejected") {
     return <h1>There was an error {error} </h1>;
   }
-
 
   const indexOfLastPost = currentPage * repositoriesPerPage;
   const indexOfFirstPost = indexOfLastPost - repositoriesPerPage;
